@@ -1,0 +1,44 @@
+# WordPress core (Local install - not tracked)
+app/public/wp-admin/
+app/public/wp-includes/
+app/public/wp-*.php
+app/public/xmlrpc.php
+app/public/readme.html
+app/public/license.txt
+app/public/index.php
+app/public/.htaccess
+
+# WordPress content (except our symlinks)
+app/public/wp-content/uploads/
+app/public/wp-content/cache/
+app/public/wp-content/upgrade/
+app/public/wp-content/themes/twentytwenty*/
+app/public/wp-content/plugins/akismet/
+app/public/wp-content/plugins/hello.php
+
+# Local / environment
+app/.envrc
+conf/
+logs/
+*.log
+.DS_Store
+.env
+.env.local
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Composer
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+
+# Secrets
+.github/secrets/
