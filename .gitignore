@@ -7,8 +7,9 @@ app/
 conf/
 logs/
 
-# =============================================================================
-# WordPress runtime (never commit — lives on production host only)
+# Local dev helper (optional — run manually after cloning)
+scripts/link-local.sh
+
 # =============================================================================
 wp-config.php
 wp-config-local.php
