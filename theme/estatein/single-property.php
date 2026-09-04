@@ -130,7 +130,7 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<section class="estatein-split-form estatein-section">
+	<section id="property-inquiry-form" class="estatein-split-form estatein-section">
 		<div>
 			<?php
 			estatein_section_header(
@@ -141,9 +141,8 @@ while ( have_posts() ) :
 			?>
 		</div>
 		<div>
-			<a href="<?php echo esc_url( estatein_page_url( 'contact' ) . '#contact-form' ); ?>" class="estatein-btn estatein-btn--primary">
-				<?php esc_html_e( 'Contact Us', 'estatein' ); ?>
-			</a>
+			<?php estatein_form_notice(); ?>
+			<?php estatein_property_inquiry_form( get_the_ID() ); ?>
 		</div>
 	</section>
 
