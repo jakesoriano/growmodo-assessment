@@ -93,9 +93,23 @@ About Us and Services are **non-linking placeholders** (Figma labels only). Rend
 
 `estatein_seed_demo()` runs on theme activation (`inc/seed.php`): Home + Contact pages, 3 demo properties, Primary menu, default settings if missing.
 
+## Linting
+
+```bash
+composer install   # once
+composer lint      # check
+composer lint:fix  # auto-fix formatting where possible
+```
+
+Optional pre-commit hook (runs `composer lint` before each commit):
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ## Intentionally not implemented
 
 - Property inquiry forms (contact page only)
 - Property Size / Build Year filters (no matching fields)
-- ACF field group in code (commented out in `helpers.php` — configure fields in ACF UI or import separately)
+- ACF field group in code (configure fields in ACF UI or import separately)
 - Settings sanitize callback removed from plugin (trusted admin only; theme still escapes on output)

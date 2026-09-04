@@ -1,5 +1,7 @@
 <?php
 /**
+ * Meta tags and Open Graph output.
+ *
  * @package Estatein
  */
 

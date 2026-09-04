@@ -1,118 +1,13 @@
 <?php
 /**
+ * Theme helpers, ACF checks, and property search query builders.
+ *
  * @package Estatein
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * ACF property field group (Free).
- */
-// function estatein_acf_init() {
-// 	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
-// 		return;
-// 	}
-
-// 	acf_add_local_field_group(
-// 		array(
-// 			'key'      => 'group_estatein_property',
-// 			'title'    => __( 'Property Details', 'estatein' ),
-// 			'fields'   => array(
-// 				array(
-// 					'key'      => 'field_property_price',
-// 					'label'    => __( 'Price', 'estatein' ),
-// 					'name'     => 'price',
-// 					'type'     => 'number',
-// 					'required' => 1,
-// 				),
-// 				array(
-// 					'key'   => 'field_property_location',
-// 					'label' => __( 'Location', 'estatein' ),
-// 					'name'  => 'location',
-// 					'type'  => 'text',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_bedrooms',
-// 					'label' => __( 'Bedrooms', 'estatein' ),
-// 					'name'  => 'bedrooms',
-// 					'type'  => 'number',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_bathrooms',
-// 					'label' => __( 'Bathrooms', 'estatein' ),
-// 					'name'  => 'bathrooms',
-// 					'type'  => 'number',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_area',
-// 					'label' => __( 'Area', 'estatein' ),
-// 					'name'  => 'area',
-// 					'type'  => 'text',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_type_label',
-// 					'label' => __( 'Property Type Label', 'estatein' ),
-// 					'name'  => 'property_type_label',
-// 					'type'  => 'text',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_category_tag',
-// 					'label' => __( 'Category Tag', 'estatein' ),
-// 					'name'  => 'category_tag',
-// 					'type'  => 'text',
-// 				),
-// 				array(
-// 					'key'   => 'field_property_is_featured',
-// 					'label' => __( 'Featured Property', 'estatein' ),
-// 					'name'  => 'is_featured',
-// 					'type'  => 'true_false',
-// 					'ui'    => 1,
-// 				),
-// 				array(
-// 					'key'          => 'field_property_amenities',
-// 					'label'        => __( 'Amenities', 'estatein' ),
-// 					'name'         => 'amenities',
-// 					'type'         => 'textarea',
-// 					'instructions' => __( 'One amenity per line.', 'estatein' ),
-// 					'rows'         => 6,
-// 				),
-// 				array(
-// 					'key'           => 'field_property_gallery_image_1',
-// 					'label'         => __( 'Gallery image 1', 'estatein' ),
-// 					'name'          => 'gallery_image_1',
-// 					'type'          => 'image',
-// 					'return_format' => 'url',
-// 				),
-// 				array(
-// 					'key'           => 'field_property_gallery_image_2',
-// 					'label'         => __( 'Gallery image 2', 'estatein' ),
-// 					'name'          => 'gallery_image_2',
-// 					'type'          => 'image',
-// 					'return_format' => 'url',
-// 				),
-// 				array(
-// 					'key'           => 'field_property_gallery_image_3',
-// 					'label'         => __( 'Gallery image 3', 'estatein' ),
-// 					'name'          => 'gallery_image_3',
-// 					'type'          => 'image',
-// 					'return_format' => 'url',
-// 				),
-// 			),
-// 			'location' => array(
-// 				array(
-// 					array(
-// 						'param'    => 'post_type',
-// 						'operator' => '==',
-// 						'value'    => 'property',
-// 					),
-// 				),
-// 			),
-// 		)
-// 	);
-// }
-// add_action( 'acf/init', 'estatein_acf_init' );
 
 /**
  * Warn if ACF is missing.

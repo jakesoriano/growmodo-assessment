@@ -1,5 +1,7 @@
 <?php
 /**
+ * Custom post type registration.
+ *
  * @package Estatein
  */
 

@@ -1,5 +1,7 @@
 <?php
 /**
+ * Theme setup, assets, and supports.
+ *
  * @package Estatein
  */
 

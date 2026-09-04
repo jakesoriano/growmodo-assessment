@@ -1,5 +1,7 @@
 <?php
 /**
+ * Contact and newsletter form handlers.
+ *
  * @package Estatein
  */
 
@@ -12,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function estatein_form_notice() {
 	$status  = isset( $_GET['form_status'] ) ? sanitize_key( wp_unslash( $_GET['form_status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$message = isset( $_GET['form_message'] ) ? sanitize_text_field( wp_unslash( urldecode( (string) $_GET['form_message'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$raw_msg = isset( $_GET['form_message'] ) ? wp_unslash( $_GET['form_message'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$message = $raw_msg ? sanitize_text_field( urldecode( (string) $raw_msg ) ) : '';
 
 	if ( ! $status ) {
 		return;
@@ -118,10 +121,12 @@ function estatein_form_collect_data( $fields ) {
 	$data = array();
 
 	foreach ( $fields as $field ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- caller verifies nonce; values sanitized below.
 		if ( ! isset( $_POST[ $field ] ) || '' === wp_unslash( $_POST[ $field ] ) ) {
 			continue;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- caller verifies nonce; values sanitized below.
 		$value = wp_unslash( $_POST[ $field ] );
 		if ( 'message' === $field ) {
 			$data[ $field ] = sanitize_textarea_field( $value );
@@ -138,18 +143,19 @@ function estatein_form_collect_data( $fields ) {
 /**
  * Persist a form submission for admin review.
  *
- * @param string               $form_type Form type.
+ * @param string                $form_type Form type.
  * @param array<string, string> $data      Field values.
  * @return int|false
  */
 function estatein_save_form_submission( $form_type, $data ) {
-	$name  = trim( ( $data['first_name'] ?? '' ) . ' ' . ( $data['last_name'] ?? '' ) );
-	$title = 'newsletter' === $form_type
+	$name         = trim( ( $data['first_name'] ?? '' ) . ' ' . ( $data['last_name'] ?? '' ) );
+	$display_name = $name ? $name : ( $data['email'] ?? __( 'Submission', 'estatein' ) );
+	$title        = 'newsletter' === $form_type
 		? sprintf( 'Newsletter — %s', $data['email'] ?? '' )
-		: sprintf( '%s — %s', ucfirst( str_replace( '_', ' ', $form_type ) ), $name ?: ( $data['email'] ?? __( 'Submission', 'estatein' ) ) );
+		: sprintf( '%s — %s', ucfirst( str_replace( '_', ' ', $form_type ) ), $display_name );
 
 	$GLOBALS['estatein_saving_inquiry'] = true;
-	$post_id = wp_insert_post(
+	$post_id                            = wp_insert_post(
 		array(
 			'post_type'   => 'estatein_inquiry',
 			'post_status' => 'private',
@@ -232,7 +238,7 @@ function estatein_handle_form() {
 		estatein_form_redirect( 'error', $error );
 	}
 
-	$lines   = array( 'Form Type: ' . $form_type, '' );
+	$lines = array( 'Form Type: ' . $form_type, '' );
 	foreach ( $data as $field => $value ) {
 		$lines[] = ucwords( str_replace( '_', ' ', $field ) ) . ': ' . $value;
 	}

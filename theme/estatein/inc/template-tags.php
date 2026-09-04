@@ -1,5 +1,7 @@
 <?php
 /**
+ * Template tags and reusable markup helpers.
+ *
  * @package Estatein
  */
 
@@ -10,12 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Render one card in the features grid.
  *
- * @param array $card {
+ * @param array $card Card configuration.
  *     @type string $icon  Icon name for estatein_icon().
  *     @type string $title Optional card title.
  *     @type string $url   Optional link URL; omit for a static card.
  *     @type array  $links Optional map of label => URL for multi-link cards (e.g. social).
- * }
  */
 function estatein_features_card( $card ) {
 	$icon  = $card['icon'] ?? '';
@@ -23,8 +24,14 @@ function estatein_features_card( $card ) {
 	$url   = $card['url'] ?? '';
 	$links = $card['links'] ?? array();
 
-	$tag = $url ? 'a' : 'div';
-	printf( '<%1$s class="estatein-features__card estatein-card"%2$s>', $tag, $url ? ' href="' . esc_url( $url ) . '"' : '' );
+	if ( $url ) {
+		printf(
+			'<a class="estatein-features__card estatein-card" href="%s">',
+			esc_url( $url )
+		);
+	} else {
+		echo '<div class="estatein-features__card estatein-card">';
+	}
 	?>
 	<span class="estatein-card__arrow"><?php estatein_icon( 'arrow-up' ); ?></span>
 	<?php
@@ -49,7 +56,11 @@ function estatein_features_card( $card ) {
 		printf( '<h3>%s</h3>', esc_html( $title ) );
 	}
 
-	printf( '</%s>', $tag );
+	if ( $url ) {
+		echo '</a>';
+	} else {
+		echo '</div>';
+	}
 }
 
 /**
@@ -91,8 +102,8 @@ function estatein_section_header( $title, $description = '', $button_text = '', 
 		)
 	);
 
-	$heading_tag  = in_array( $args['heading_tag'], array( 'h1', 'h2', 'h3' ), true ) ? $args['heading_tag'] : 'h2';
-	$title_class  = 'h3' === $heading_tag ? 'estatein-h3' : 'estatein-h2';
+	$heading_tag = in_array( $args['heading_tag'], array( 'h1', 'h2', 'h3' ), true ) ? $args['heading_tag'] : 'h2';
+	$title_class = 'h3' === $heading_tag ? 'estatein-h3' : 'estatein-h2';
 	?>
 	<div class="estatein-section-header">
 		<?php if ( $args['sparkle'] ) : ?>

@@ -158,11 +158,13 @@ $testimonials = array(
 				<?php
 				$rating = isset( $item['rating'] ) ? (int) $item['rating'] : 5;
 				$rating = max( 1, min( 5, $rating ) );
+				/* translators: %d: star rating from 1 to 5. */
+				$stars_label = sprintf( __( '%1$d out of 5 stars', 'estatein' ), $rating );
 				?>
 				<div class="estatein-carousel__slide">
 					<article class="estatein-testimonial-card">
 						<div class="estatein-testimonial-card__content">
-							<div class="estatein-testimonial-card__stars" aria-label="<?php echo esc_attr( sprintf( __( '%1$d out of 5 stars', 'estatein' ), $rating ) ); ?>">
+							<div class="estatein-testimonial-card__stars" aria-label="<?php echo esc_attr( $stars_label ); ?>">
 								<?php
 								for ( $i = 0; $i < $rating; $i++ ) {
 									estatein_icon( 'star' );

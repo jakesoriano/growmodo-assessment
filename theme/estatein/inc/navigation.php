@@ -1,5 +1,7 @@
 <?php
 /**
+ * Primary navigation placeholders and fallback menu.
+ *
  * @package Estatein
  */
 
@@ -27,9 +29,9 @@ function estatein_nav_link_atts( $atts, $item, $args ) {
 	}
 
 	if ( estatein_is_placeholder_nav_item( $item->title ) ) {
-		$class         .= ' estatein-header__nav-link--placeholder';
-		$atts['href']   = '#';
-		$atts['role']   = 'link';
+		$class                .= ' estatein-header__nav-link--placeholder';
+		$atts['href']          = '#';
+		$atts['role']          = 'link';
 		$atts['aria-disabled'] = 'true';
 		$atts['tabindex']      = '-1';
 	}

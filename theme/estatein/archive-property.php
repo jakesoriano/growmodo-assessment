@@ -7,17 +7,17 @@
 
 get_header();
 
-$keyword  = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$location = isset( $_GET['location'] ) ? sanitize_text_field( wp_unslash( $_GET['location'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$type     = isset( $_GET['type'] ) ? sanitize_text_field( wp_unslash( $_GET['type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$price    = isset( $_GET['price'] ) ? sanitize_key( wp_unslash( $_GET['price'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$keyword       = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$location      = isset( $_GET['location'] ) ? sanitize_text_field( wp_unslash( $_GET['location'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$property_type = isset( $_GET['type'] ) ? sanitize_text_field( wp_unslash( $_GET['type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$price         = isset( $_GET['price'] ) ? sanitize_key( wp_unslash( $_GET['price'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 $properties = get_posts(
 	estatein_property_search_args(
 		array(
 			'q'        => $keyword,
 			'location' => $location,
-			'type'     => $type,
+			'type'     => $property_type,
 			'price'    => $price,
 		)
 	)
@@ -64,7 +64,7 @@ $price_options    = estatein_property_filter_price_ranges();
 					<select class="estatein-search__filter-select" name="location" onchange="this.form.requestSubmit()">
 						<option value=""><?php esc_html_e( 'Location', 'estatein' ); ?></option>
 						<?php foreach ( $location_options as $value => $label ) : ?>
-							<option value="<?php echo esc_attr( $value ); ?>" <? selected( $location, $value ); ?>><?php echo esc_html( $label ); ?></option>
+							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $location, $value ); ?>><?php echo esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 					<?php estatein_icon( 'chevron' ); ?>
@@ -75,7 +75,7 @@ $price_options    = estatein_property_filter_price_ranges();
 					<select class="estatein-search__filter-select" name="type" onchange="this.form.requestSubmit()">
 						<option value=""><?php esc_html_e( 'Property Type', 'estatein' ); ?></option>
 						<?php foreach ( $type_options as $value => $label ) : ?>
-							<option value="<?php echo esc_attr( $value ); ?>" <? selected( $type, $value ); ?>><?php echo esc_html( $label ); ?></option>
+							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $property_type, $value ); ?>><?php echo esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 					<?php estatein_icon( 'chevron' ); ?>
@@ -86,7 +86,7 @@ $price_options    = estatein_property_filter_price_ranges();
 					<select class="estatein-search__filter-select" name="price" onchange="this.form.requestSubmit()">
 						<option value=""><?php esc_html_e( 'Pricing Range', 'estatein' ); ?></option>
 						<?php foreach ( $price_options as $value => $label ) : ?>
-							<option value="<?php echo esc_attr( $value ); ?>" <? selected( $price, $value ); ?>><?php echo esc_html( $label ); ?></option>
+							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $price, $value ); ?>><?php echo esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 					<?php estatein_icon( 'chevron' ); ?>

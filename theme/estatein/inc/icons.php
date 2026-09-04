@@ -1,5 +1,7 @@
 <?php
 /**
+ * Inline SVG icon registry and renderer.
+ *
  * @package Estatein
  */
 
@@ -76,103 +78,103 @@ function estatein_icon_svg_file( $filename, $icon_class = 'estatein-icon' ) {
  */
 function estatein_icon( $name ) {
 	$file_icons = array(
-		'bed'      => array(
+		'bed'          => array(
 			'file'  => 'icon-bed.svg',
 			'class' => 'estatein-icon',
 		),
-		'bath'     => array(
+		'bath'         => array(
 			'file'  => 'icon-bath.svg',
 			'class' => 'estatein-icon',
 		),
-		'villa'    => array(
+		'villa'        => array(
 			'file'  => 'icon-villa.svg',
 			'class' => 'estatein-icon',
 		),
-		'home'     => array(
+		'home'         => array(
 			'file'  => 'icon-villa.svg',
 			'class' => 'estatein-icon',
 		),
-		'building' => array(
+		'building'     => array(
 			'file'  => 'icon-building-purple.svg',
 			'class' => 'estatein-icon estatein-icon--badge',
 		),
-		'camera'   => array(
+		'camera'       => array(
 			'file'  => 'icon-camera-purple.svg',
 			'class' => 'estatein-icon estatein-icon--badge',
 		),
-		'shop'     => array(
+		'shop'         => array(
 			'file'  => 'icon-shop-purple.svg',
 			'class' => 'estatein-icon estatein-icon--badge',
 		),
-		'sun'      => array(
+		'sun'          => array(
 			'file'  => 'icon-sun-purple.svg',
 			'class' => 'estatein-icon estatein-icon--badge',
 		),
-		'star'     => array(
+		'star'         => array(
 			'file'  => 'icon-star.svg',
 			'class' => 'estatein-icon estatein-icon--rating',
 		),
-		'facebook' => array(
+		'facebook'     => array(
 			'file'  => 'icon-facebook.svg',
 			'class' => 'estatein-icon estatein-icon--social',
 		),
-		'linkedin' => array(
+		'linkedin'     => array(
 			'file'  => 'icon-linkedin.svg',
 			'class' => 'estatein-icon estatein-icon--social',
 		),
-		'twitter'  => array(
+		'twitter'      => array(
 			'file'  => 'icon-twitter.svg',
 			'class' => 'estatein-icon estatein-icon--social',
 		),
-		'youtube'  => array(
+		'youtube'      => array(
 			'file'  => 'icon-youtube.svg',
 			'class' => 'estatein-icon estatein-icon--social',
 		),
-		'email'    => array(
+		'email'        => array(
 			'file'  => 'icon-email.svg',
 			'class' => 'estatein-icon estatein-icon--newsletter-email',
 		),
-		'send'     => array(
+		'send'         => array(
 			'file'  => 'icon-send.svg',
 			'class' => 'estatein-icon estatein-icon--newsletter-send',
 		),
-		'section'  => array(
+		'section'      => array(
 			'file'  => 'icon-section.svg',
 			'class' => 'estatein-icon estatein-icon--section',
 		),
-		'pin'      => array(
+		'pin'          => array(
 			'file'  => 'icon-pin.svg',
 			'class' => 'estatein-icon estatein-icon--filter',
 		),
-		'property' => array(
+		'property'     => array(
 			'file'  => 'icon-property.svg',
 			'class' => 'estatein-icon estatein-icon--filter',
 		),
-		'price'    => array(
+		'price'        => array(
 			'file'  => 'icon-price.svg',
 			'class' => 'estatein-icon estatein-icon--filter',
 		),
-		'box'      => array(
+		'box'          => array(
 			'file'  => 'icon-box.svg',
 			'class' => 'estatein-icon estatein-icon--filter',
 		),
-		'calendar' => array(
+		'calendar'     => array(
 			'file'  => 'icon-calendar.svg',
 			'class' => 'estatein-icon estatein-icon--filter',
 		),
-		'lightning' => array(
+		'lightning'    => array(
 			'file'  => 'icon-lightning.svg',
 			'class' => 'estatein-icon estatein-icon--lightning',
 		),
-		'bed-gray'  => array(
+		'bed-gray'     => array(
 			'file'  => 'icon-bed-gray.svg',
 			'class' => 'estatein-icon estatein-icon--stat',
 		),
-		'bath-gray' => array(
+		'bath-gray'    => array(
 			'file'  => 'icon-bath-gray.svg',
 			'class' => 'estatein-icon estatein-icon--stat',
 		),
-		'area-gray' => array(
+		'area-gray'    => array(
 			'file'  => 'icon-area-gray.svg',
 			'class' => 'estatein-icon estatein-icon--stat',
 		),

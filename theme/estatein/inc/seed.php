@@ -1,5 +1,7 @@
 <?php
 /**
+ * Demo content seeded on theme activation.
+ *
  * @package Estatein
  */
 
@@ -154,10 +156,10 @@ function estatein_seed_demo() {
 				$menu_id,
 				0,
 				array(
-					'menu-item-title'  => $item['title'],
-					'menu-item-url'    => '' !== $item['url'] ? $item['url'] : '#',
-					'menu-item-status' => 'publish',
-					'menu-item-type'   => 'custom',
+					'menu-item-title'    => $item['title'],
+					'menu-item-url'      => '' !== $item['url'] ? $item['url'] : '#',
+					'menu-item-status'   => 'publish',
+					'menu-item-type'     => 'custom',
 					'menu-item-position' => $i + 1,
 				)
 			);

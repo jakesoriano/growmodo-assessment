@@ -7,14 +7,14 @@
 
 get_header();
 
-$email       = estatein_option( 'contact_email' );
-$phone       = estatein_option( 'contact_phone' );
-$socials     = array(
+$email      = estatein_option( 'contact_email' );
+$phone      = estatein_option( 'contact_phone' );
+$socials    = array(
 	'Instagram' => estatein_option( 'social_instagram' ),
 	'LinkedIn'  => estatein_option( 'social_linkedin' ),
 	'Facebook'  => estatein_option( 'social_facebook' ),
 );
-$images_uri  = get_template_directory_uri() . '/assets/images/';
+$images_uri = get_template_directory_uri() . '/assets/images/';
 
 $offices = array(
 	array(

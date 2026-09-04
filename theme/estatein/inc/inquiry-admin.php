@@ -1,5 +1,7 @@
 <?php
 /**
+ * Form submission admin UI and capability mapping.
+ *
  * @package Estatein
  */
 
@@ -16,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array  $args    Extra args.
  * @return array
  */
-function estatein_inquiry_map_meta_cap( $caps, $cap, $user_id, $args ) {
+function estatein_inquiry_map_meta_cap( $caps, $cap, $user_id, $args ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
 	if ( empty( $GLOBALS['estatein_saving_inquiry'] ) ) {
 		return $caps;
 	}
@@ -40,7 +42,7 @@ function estatein_inquiry_columns( $columns ) {
 	foreach ( $columns as $key => $label ) {
 		$new[ $key ] = $label;
 		if ( 'title' === $key ) {
-			$new['inquiry_type'] = __( 'Form', 'estatein' );
+			$new['inquiry_type']  = __( 'Form', 'estatein' );
 			$new['inquiry_email'] = __( 'Email', 'estatein' );
 		}
 	}
@@ -83,6 +85,8 @@ function estatein_inquiry_meta_box() {
 add_action( 'add_meta_boxes', 'estatein_inquiry_meta_box' );
 
 /**
+ * Render inquiry submission meta box.
+ *
  * @param WP_Post $post Post.
  */
 function estatein_inquiry_meta_box_render( $post ) {
