@@ -1,44 +1,55 @@
-# WordPress core (Local install - not tracked)
-app/public/wp-admin/
-app/public/wp-includes/
-app/public/wp-*.php
-app/public/xmlrpc.php
-app/public/readme.html
-app/public/license.txt
-app/public/index.php
-app/public/.htaccess
+# =============================================================================
+# Local WordPress (Local WP) — not deployed; use symlinks from theme/ + plugin/
+# =============================================================================
+app/
 
-# WordPress content (except our symlinks)
-app/public/wp-content/uploads/
-app/public/wp-content/cache/
-app/public/wp-content/upgrade/
-app/public/wp-content/themes/twentytwenty*/
-app/public/wp-content/plugins/akismet/
-app/public/wp-content/plugins/hello.php
-
-# Local / environment
-app/.envrc
+# Local WP machine config (nginx/php/mysql templates, logs)
 conf/
 logs/
-*.log
-.DS_Store
+
+# =============================================================================
+# WordPress runtime (never commit — lives on production host only)
+# =============================================================================
+wp-config.php
+wp-config-local.php
+*.sql
+*.sql.gz
+
+# =============================================================================
+# Environment & secrets
+# =============================================================================
 .env
-.env.local
+.env.*
+!.env.example
+app/.envrc
+.github/secrets/
 
-# Node
+# =============================================================================
+# Dependencies (install locally / in CI)
+# =============================================================================
 node_modules/
-npm-debug.log*
-
-# Composer
 vendor/
 
-# IDE
+# =============================================================================
+# Logs & temp
+# =============================================================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================================================
+# OS & IDE
+# =============================================================================
+.DS_Store
+Thumbs.db
 .idea/
 .vscode/
 *.swp
+*~
 
-# OS
-Thumbs.db
-
-# Secrets
-.github/secrets/
+# =============================================================================
+# Misc backups / archives
+# =============================================================================
+*.zip
+*.tar.gz
