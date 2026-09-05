@@ -39,9 +39,8 @@ custom handler using WordPress `admin-post.php`.
 | Form | Where | `form_type` |
 |------|-------|-------------|
 | Contact | `/contact/` (`page-contact.php`) | `contact` |
+| Property inquiry | Single property (`single-property.php`) | `property_detail` |
 | Newsletter | Footer (`footer.php`) | `newsletter` |
-
-Property inquiry forms on archive/single property pages were removed; those sections link to `/contact/#contact-form` instead.
 
 ### Flow
 
@@ -50,12 +49,13 @@ Property inquiry forms on archive/single property pages were removed; those sect
 3. Security: WordPress nonce (`estatein_nonce`) + honeypot field (`website`)
 4. Validation:
    - **Contact** — first/last name, email, message, terms checkbox
+   - **Property inquiry** — first/last name, email, selected property, terms (message optional)
    - **Newsletter** — valid email only
 5. On success:
    - Saves a private `estatein_inquiry` post with field data in `_form_data` meta
    - Sends plain-text email via `wp_mail()` to `contact_email` from Estatein Settings (falls back to WP admin email)
 6. Redirects back with `?form_status=success|error&form_message=...`
-7. Notice rendered by `estatein_form_notice()` — on contact page, inside `#contact-form`; elsewhere in header
+7. Notice rendered by `estatein_form_notice()` — on contact page inside `#contact-form`; on property details inside `#property-inquiry-form`
 
 Client-side validation lives in `main.js` (`data-estatein-form`).
 
@@ -109,7 +109,7 @@ git config core.hooksPath .githooks
 
 ## Intentionally not implemented
 
-- Property inquiry forms (contact page only)
+- Property inquiry form on properties archive (links to contact instead)
 - Property Size / Build Year filters (no matching fields)
 - ACF field group in code (configure fields in ACF UI or import separately)
 - Settings sanitize callback removed from plugin (trusted admin only; theme still escapes on output)

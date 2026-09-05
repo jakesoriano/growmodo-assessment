@@ -102,6 +102,69 @@ function estatein_form() {
 }
 
 /**
+ * Property details inquiry form.
+ *
+ * @param int $property_id Property post ID.
+ */
+function estatein_property_inquiry_form( $property_id = 0 ) {
+	$property_id = $property_id ? (int) $property_id : get_the_ID();
+	$uid         = 'property-' . $property_id;
+	$title       = $property_id ? get_the_title( $property_id ) : '';
+	$loc         = $property_id ? estatein_field( 'location', $property_id ) : '';
+	$selected    = trim( $title . ( $loc ? ', ' . $loc : '' ) );
+	?>
+	<form class="estatein-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" novalidate data-estatein-form>
+		<input type="hidden" name="action" value="estatein_form">
+		<?php wp_nonce_field( 'estatein_form', 'estatein_nonce' ); ?>
+		<input type="hidden" name="form_type" value="property_detail">
+		<div class="estatein-honeypot" aria-hidden="true">
+			<label for="website-<?php echo esc_attr( $uid ); ?>">Website</label>
+			<input type="text" name="website" id="website-<?php echo esc_attr( $uid ); ?>" tabindex="-1" autocomplete="off">
+		</div>
+
+		<div class="estatein-form__card">
+			<div class="estatein-form__grid estatein-form__grid--2">
+				<div class="estatein-form__field">
+					<label class="estatein-form__label" for="first_name-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'First Name', 'estatein' ); ?></label>
+					<input class="estatein-form__input" type="text" id="first_name-<?php echo esc_attr( $uid ); ?>" name="first_name" placeholder="<?php esc_attr_e( 'Enter First Name', 'estatein' ); ?>" required>
+				</div>
+				<div class="estatein-form__field">
+					<label class="estatein-form__label" for="last_name-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'Last Name', 'estatein' ); ?></label>
+					<input class="estatein-form__input" type="text" id="last_name-<?php echo esc_attr( $uid ); ?>" name="last_name" placeholder="<?php esc_attr_e( 'Enter Last Name', 'estatein' ); ?>" required>
+				</div>
+			</div>
+			<div class="estatein-form__grid estatein-form__grid--2" style="margin-top:20px">
+				<div class="estatein-form__field">
+					<label class="estatein-form__label" for="email-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'Email', 'estatein' ); ?></label>
+					<input class="estatein-form__input" type="email" id="email-<?php echo esc_attr( $uid ); ?>" name="email" placeholder="<?php esc_attr_e( 'Enter your Email', 'estatein' ); ?>" required>
+				</div>
+				<div class="estatein-form__field">
+					<label class="estatein-form__label" for="phone-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'Phone', 'estatein' ); ?></label>
+					<input class="estatein-form__input" type="tel" id="phone-<?php echo esc_attr( $uid ); ?>" name="phone" placeholder="<?php esc_attr_e( 'Enter Phone Number', 'estatein' ); ?>">
+				</div>
+			</div>
+			<div class="estatein-form__field" style="margin-top:20px">
+				<label class="estatein-form__label" for="selected_property-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'Selected Property', 'estatein' ); ?></label>
+				<input class="estatein-form__input" type="text" id="selected_property-<?php echo esc_attr( $uid ); ?>" name="selected_property" value="<?php echo esc_attr( $selected ); ?>" readonly>
+			</div>
+			<div class="estatein-form__field" style="margin-top:20px">
+				<label class="estatein-form__label" for="message-<?php echo esc_attr( $uid ); ?>"><?php esc_html_e( 'Message', 'estatein' ); ?></label>
+				<textarea class="estatein-form__textarea" id="message-<?php echo esc_attr( $uid ); ?>" name="message" placeholder="<?php esc_attr_e( 'Enter your Message here...', 'estatein' ); ?>"></textarea>
+			</div>
+		</div>
+
+		<div class="estatein-form__footer">
+			<label class="estatein-form__checkbox">
+				<input type="checkbox" name="terms" required>
+				<span><?php esc_html_e( 'I agree with Terms of Use and Privacy Policy.', 'estatein' ); ?></span>
+			</label>
+			<button type="submit" class="estatein-btn estatein-btn--primary"><?php esc_html_e( 'Send Your Message', 'estatein' ); ?></button>
+		</div>
+	</form>
+	<?php
+}
+
+/**
  * Email recipient for form notifications.
  *
  * @return string
@@ -202,6 +265,32 @@ function estatein_validate_contact_form( $data ) {
 }
 
 /**
+ * Validate property inquiry form fields.
+ *
+ * @param array<string, string> $data Sanitized data.
+ * @return string Error message or empty string.
+ */
+function estatein_validate_property_inquiry_form( $data ) {
+	if ( empty( $data['first_name'] ) || empty( $data['last_name'] ) ) {
+		return __( 'Please enter your first and last name.', 'estatein' );
+	}
+
+	if ( empty( $data['email'] ) || ! is_email( $data['email'] ) ) {
+		return __( 'Please enter a valid email address.', 'estatein' );
+	}
+
+	if ( empty( $data['selected_property'] ) ) {
+		return __( 'Please select a property.', 'estatein' );
+	}
+
+	if ( empty( $_POST['terms'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified in handler.
+		return __( 'Please agree to the Terms of Use and Privacy Policy.', 'estatein' );
+	}
+
+	return '';
+}
+
+/**
  * Handle form posts.
  */
 function estatein_handle_form() {
@@ -223,13 +312,20 @@ function estatein_handle_form() {
 		'inquiry_type',
 		'hear_about',
 	);
-	$data      = estatein_form_collect_data( $allowed );
-	$error     = '';
+
+	if ( 'property_detail' === $form_type ) {
+		$allowed[] = 'selected_property';
+	}
+
+	$data  = estatein_form_collect_data( $allowed );
+	$error = '';
 
 	if ( 'newsletter' === $form_type ) {
 		if ( empty( $data['email'] ) || ! is_email( $data['email'] ) ) {
 			estatein_form_redirect( 'error', __( 'Please enter a valid email address.', 'estatein' ) );
 		}
+	} elseif ( 'property_detail' === $form_type ) {
+		$error = estatein_validate_property_inquiry_form( $data );
 	} else {
 		$error = estatein_validate_contact_form( $data );
 	}
@@ -256,9 +352,13 @@ function estatein_handle_form() {
 		estatein_form_redirect( 'error', __( 'Unable to send message. Please try again.', 'estatein' ) );
 	}
 
-	$success_message = 'newsletter' === $form_type
-		? __( 'Thank you for subscribing!', 'estatein' )
-		: __( 'Thank you! Your message has been sent.', 'estatein' );
+	if ( 'newsletter' === $form_type ) {
+		$success_message = __( 'Thank you for subscribing!', 'estatein' );
+	} elseif ( 'property_detail' === $form_type ) {
+		$success_message = __( 'Thank you! Your property inquiry has been sent.', 'estatein' );
+	} else {
+		$success_message = __( 'Thank you! Your message has been sent.', 'estatein' );
+	}
 
 	estatein_form_redirect( 'success', $success_message );
 }
@@ -278,6 +378,8 @@ function estatein_form_redirect( $status, $message = '' ) {
 	$path = wp_parse_url( $redirect, PHP_URL_PATH );
 	if ( $path && false !== strpos( $path, '/contact' ) ) {
 		$redirect = strtok( $redirect, '#' ) . '#contact-form';
+	} elseif ( $path && preg_match( '#/properties/.+#', $path ) ) {
+		$redirect = strtok( $redirect, '#' ) . '#property-inquiry-form';
 	}
 
 	$args = array(
